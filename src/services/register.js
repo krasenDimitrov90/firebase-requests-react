@@ -1,6 +1,6 @@
 import * as api from "../api.js";
 import { HandleError } from "../errors.js";
-console.log('in register');
+
 
 const registerURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB0dqaMV0xMmpNH3wM-nAhgVjeD5R0xjU8';
 
