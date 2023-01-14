@@ -15,14 +15,12 @@ const request = (method, url, data, token = null) => {
 
     return fetch(url, options)
         .then(res => {
-            console.log(res);
             if (!res.ok) {
                 throw res.json();
             }
             return res.json();
         })
         .then(data => {
-            console.log(data);
             return data;
         })
         .catch(error => {

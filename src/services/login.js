@@ -1,12 +1,11 @@
 import * as api from "../api.js";
 import { HandleError } from "../errors.js";
-console.log('in login componnet');
 
 const loginURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB0dqaMV0xMmpNH3wM-nAhgVjeD5R0xjU8';
 
-let loggedInComponent = document.getElementById('logged');
+// let loggedInComponent = document.getElementById('logged');
 
-const loginErrorEl = document.getElementById('login-error');
+// const loginErrorEl = document.getElementById('login-error');
 
 
 const loginHandler = (e) => {
