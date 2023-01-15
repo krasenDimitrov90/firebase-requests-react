@@ -11,9 +11,9 @@ function App() {
     <AuthContextProvider>
       <BrowserRouter>
         <nav>
-          <Link to={'/'} >Home</Link>
-          <Link to={'/login'} >Login</Link>
-          <Link to={'/register'} >Register</Link>
+          <li><Link to={'/'} >Home</Link></li>
+          <li><Link to={'/login'} >Login</Link></li>
+          <li><Link to={'/register'} >Register</Link></li>
         </nav>
         <Routes>
           <Route path='/' exatct element={<Home />} />
