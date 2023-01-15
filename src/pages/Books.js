@@ -10,7 +10,6 @@ const Books = () => {
     React.useEffect(() => {
         api.get('https://testing-12da0-default-rtdb.europe-west1.firebasedatabase.app/books.json')
             .then(books => {
-                console.log(Object.values(books));
                 setBooks(books);
             })
             .catch(err => {
@@ -22,7 +21,6 @@ const Books = () => {
 
 
     const booksTemplate = (author, title, description, image) => {
-        console.log(author, title, description, image);
         return (
             <div className="book-container" >
                 <h3>{author}</h3>

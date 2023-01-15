@@ -3,13 +3,12 @@ import AuthContext from "../context/auth-context";
 import useInput from "../hooks/use-input";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
-import * as api from '../services/api';
+import * as request from '../services/requests';
 import { HandleError } from "../services/errors";
 
 
-const loginURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB0dqaMV0xMmpNH3wM-nAhgVjeD5R0xjU8';
 
-const emailValidator = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const emailValidator = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const Login = () => {
 
@@ -56,7 +55,7 @@ const Login = () => {
         };
 
         setIsLoading(true);
-        api.post(loginURL, data)
+        request.login(data)
             .then(user => {
                 setIsLoading(false)
                 authCtx.login(user.idToken, user.localId, user.email);

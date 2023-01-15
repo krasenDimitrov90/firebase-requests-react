@@ -16,7 +16,6 @@ const request = (method, url, data, token = null) => {
 
     return fetch(url, options)
         .then(res => {
-            console.log(res);
             if (!res.ok) {
                 throw res.json();
             }

@@ -3,12 +3,11 @@ import { useNavigate } from "react-router";
 import InputField from "../components/InputField";
 import './Register.css';
 import useInputCopy from "../hooks/use-input copy";
-import * as api from '../services/api';
+import * as request from '../services/requests';
 import { HandleError } from "../services/errors";
 
-const registerURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB0dqaMV0xMmpNH3wM-nAhgVjeD5R0xjU8';
 
-const emailValidator = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const emailValidator = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const Register = () => {
 
@@ -57,7 +56,9 @@ const Register = () => {
             return;
         }
 
-        api.post(registerURL, {email, password})
+        const data = {email, password};
+
+        request.register(data)
             .then(data => navigate('/login'))
             .catch(err => {
                 err.then(error => {

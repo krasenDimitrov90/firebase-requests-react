@@ -4,8 +4,7 @@ import InputField from "../components/InputField";
 import AuthContext from "../context/auth-context";
 import useInputCopy from "../hooks/use-input copy";
 
-import * as api from '../services/api';
-import { HandleError } from "../services/errors";
+import * as request from '../services/requests';
 
 const AddBook = () => {
 
@@ -16,7 +15,6 @@ const AddBook = () => {
 
     const {
         value: author,
-        valueIsValid: authorIsValid,
         hasError: authorInputHasError,
         onChangeHandler: authorInputOnChangeHandler,
         onBlurHandler: authorInputBlurHandler,
@@ -25,7 +23,6 @@ const AddBook = () => {
 
     const {
         value: title,
-        valueIsValid: titleIsValid,
         hasError: titleInputHasError,
         onChangeHandler: titleInputOnChangeHandler,
         onBlurHandler: titleInputBlurHandler,
@@ -34,7 +31,6 @@ const AddBook = () => {
 
     const {
         value: description,
-        valueIsValid: descriptionIsValid,
         hasError: descriptionInputHasError,
         onChangeHandler: descriptionInputOnChangeHandler,
         onBlurHandler: descriptionInputBlurHandler,
@@ -43,7 +39,6 @@ const AddBook = () => {
 
     const {
         value: image,
-        valueIsValid: imageIsValid,
         hasError: imageInputHasError,
         onChangeHandler: imageInputOnChangeHandler,
         onBlurHandler: imageInputBlurHandler,
@@ -53,14 +48,13 @@ const AddBook = () => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        console.log(userCredentials);
 
         let data = {author, title, description, image,
             email: userCredentials.userEmail,
             ownerId: userCredentials.userId,
         }
 
-        api.post('https://testing-12da0-default-rtdb.europe-west1.firebasedatabase.app/books.json', data, userCredentials.userToken)
+        request.addBook(data, userCredentials.userToken)
             .then(data => console.log(data))
             .catch(err => {
                 err.then(error => {
