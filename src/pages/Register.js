@@ -1,11 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import InputField from "../components/InputField";
 import './Register.css';
 import useInputCopy from "../hooks/use-input copy";
+import * as api from '../services/api';
+import { HandleError } from "../services/errors";
+
+const registerURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB0dqaMV0xMmpNH3wM-nAhgVjeD5R0xjU8';
 
 const emailValidator = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const Register = () => {
+
+    const navigate = useNavigate();
 
     const {
         value: email,
@@ -44,14 +51,20 @@ const Register = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
-        const formData = Object.fromEntries(new FormData(e.target));
 
         if (password !== repeatPassword) {
             console.log('Passwords does\'t match!');
             return;
         }
 
-        console.log(formData);
+        api.post(registerURL, {email, password})
+            .then(data => navigate('/login'))
+            .catch(err => {
+                err.then(error => {
+                    HandleError.loginError(error.error);
+                });
+            });
+
         resetEmailInput();
         resetPasswordInput();
         resetRepeatPasswordInput();

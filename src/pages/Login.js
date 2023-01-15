@@ -1,6 +1,7 @@
 import React from "react";
 import AuthContext from "../context/auth-context";
 import useInput from "../hooks/use-input";
+import { useNavigate } from "react-router-dom";
 import './Login.css';
 import * as api from '../services/api';
 import { HandleError } from "../services/errors";
@@ -11,6 +12,8 @@ const loginURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithP
 const emailValidator = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const Login = () => {
+
+    const navigate = useNavigate();
 
     const authCtx = React.useContext(AuthContext);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -57,6 +60,7 @@ const Login = () => {
             .then(user => {
                 setIsLoading(false)
                 authCtx.login(user.idToken, user.localId);
+                navigate('/');
             })
             .catch(err => {
                 setIsLoading(false)
