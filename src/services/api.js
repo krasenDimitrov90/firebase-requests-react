@@ -6,6 +6,7 @@ const request = (method, url, data, token = null) => {
 
     if (method !== 'GET') {
         options.method = method;
+        options.headers = {"Content-Type": "application/json"};
         options.body = JSON.stringify(data);
     }
 
@@ -15,6 +16,7 @@ const request = (method, url, data, token = null) => {
 
     return fetch(url, options)
         .then(res => {
+            console.log(res);
             if (!res.ok) {
                 throw res.json();
             }

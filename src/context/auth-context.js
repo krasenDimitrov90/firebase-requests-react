@@ -16,19 +16,33 @@ export const AuthContextProvider = (props) => {
     React.useEffect(() => {
         if (token) {
             setIsLoggedIn(true);
-        } 
+        }
     }, []);
 
+    const getUserCredentials = () => {
+        const userToken = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        const userEmail = localStorage.getItem('userEmail');
 
-    const loginHandler = (token, userId) => {
+        return {
+            userToken,
+            userId,
+            userEmail,
+        };
+    }
+
+
+    const loginHandler = (token, userId, email) => {
         localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
+        localStorage.setItem('userEmail', email);
         setIsLoggedIn(true);
     };
 
     const loggoutHandler = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('userEmail');
         setIsLoggedIn(false);
     };
 
@@ -37,6 +51,7 @@ export const AuthContextProvider = (props) => {
         isLoggedIn,
         login: loginHandler,
         loggout: loggoutHandler,
+        getUserCredentials,
     };
 
     return (

@@ -1,0 +1,13 @@
+.all-books {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.book-container {
+    border: 2px solid gray;
+    padding: 10px;
+}
+
+.book-image {
+    width: 150px;
+}

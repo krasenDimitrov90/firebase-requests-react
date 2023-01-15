@@ -59,7 +59,7 @@ const Login = () => {
         api.post(loginURL, data)
             .then(user => {
                 setIsLoading(false)
-                authCtx.login(user.idToken, user.localId);
+                authCtx.login(user.idToken, user.localId, user.email);
                 navigate('/');
             })
             .catch(err => {
