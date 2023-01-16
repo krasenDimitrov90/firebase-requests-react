@@ -57,6 +57,7 @@ const Login = () => {
         setIsLoading(true);
         request.login(data)
             .then(user => {
+                console.log('In login');
                 setIsLoading(false)
                 authCtx.login(user.idToken, user.localId, user.email);
                 navigate('/');

@@ -1,43 +1,35 @@
 import React from "react";
+import Book from "../components/Book";
+import useHttp from "../hooks/use-http";
 
-import * as api from '../services/api';
 import './Books.css';
 
 const Books = () => {
 
+    const { isLoading, sendRequest: getBooks } = useHttp();
     const [books, setBooks] = React.useState({});
 
     React.useEffect(() => {
-        api.get('https://testing-12da0-default-rtdb.europe-west1.firebasedatabase.app/books.json')
-            .then(books => {
-                setBooks(books);
-            })
-            .catch(err => {
-                err.then(error => {
-                    alert(error.error);
-                });
-            })
-    }, []);
-
-
-    const booksTemplate = (author, title, description, image) => {
-        return (
-            <div className="book-container" >
-                <h3>{author}</h3>
-                <h4>{title}</h4>
-                <h4>{description}</h4>
-                <img src={image} alt="some book cover" className="book-image" />
-                <button>Details</button>
-            </div>
-        );
-    };
+        const setBooksHandler = (books) => setBooks(books);
+        const errorHandler = (error) => alert(error.error);
+        getBooks('getAllBooks', setBooksHandler, errorHandler);
+    }, [getBooks]);
 
     return (
         <>
             <h1>All books</h1>
             <header className="all-books" >
+                {isLoading && <h1>LOADINGGGGGGGGGGGGGGGGGGGGGGGGG</h1>}
                 {Object.keys(books).length === 0 && <p>No books found!</p>}
-                {Object.keys(books).length > 0 && Object.values(books).map(book => booksTemplate(book.author, book.title, book.description, book.image))}
+                {Object.keys(books).length > 0 && Object.values(books).map(book => {
+                    return <Book
+                        key={book.title}
+                        author={book.author}
+                        title={book.title}
+                        description={book.description}
+                        image={book.image}
+                    />
+                })}
             </header>
         </>
     );

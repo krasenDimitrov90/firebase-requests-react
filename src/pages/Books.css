@@ -6,6 +6,8 @@
 .book-container {
     border: 2px solid gray;
     padding: 10px;
+    flex: 1;
+    margin: 25px;
 }
 
 .book-image {

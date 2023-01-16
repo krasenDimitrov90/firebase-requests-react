@@ -27,7 +27,7 @@ const Navigation = (props) => {
         <header>
             <nav>
                 <li><Link to={'/'} >Home</Link></li>
-                <li><Link to='/books' >Books</Link></li>
+                <li><Link to={'/books'} >Books</Link></li>
                 {isLoggedIn && userTemplate}
                 {!isLoggedIn && guestTemplate}
             </nav>
