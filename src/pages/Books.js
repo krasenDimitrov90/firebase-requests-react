@@ -24,9 +24,10 @@ const Books = () => {
             <header className="all-books" >
                 {isLoading && <h1>LOADINGGGGGGGGGGGGGGGGGGGGGGGGG</h1>}
                 {Object.keys(books).length === 0 && <p>No books found!</p>}
-                {Object.keys(books).length > 0 && Object.values(books).map(book => {
+                {Object.keys(books).length > 0 && Object.entries(books).map(([bookId, book]) => {
                     return <Book
                         key={book.title}
+                        id={bookId}
                         author={book.author}
                         title={book.title}
                         description={book.description}

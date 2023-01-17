@@ -1,13 +1,13 @@
+import { Link } from "react-router-dom";
 
-
-const Book = ({author, title, description, image}) => {
+const Book = ({id, author, title, description, image}) => {
     return (
         <div className="book-container" >
             <h3>{author}</h3>
             <h4>{title}</h4>
             <h4>{description}</h4>
             <img src={image} alt="some book cover" className="book-image" />
-            <button>Details</button>
+            <Link to={`/books/${id}`} >Details</Link>
         </div>
     );
 };

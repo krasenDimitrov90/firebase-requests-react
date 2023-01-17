@@ -8,6 +8,7 @@ import Books from './pages/Books';
 
 import './App.css';
 import Layout from './components/Layout';
+import BookDetails from './pages/BookDetails';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/add-book' element={<AddBook />} />
             <Route path='/books' element={<Books />} />
+            <Route path='/books/:bookId' element={<BookDetails />} />
           </Routes>
         </Layout>
       </BrowserRouter>
