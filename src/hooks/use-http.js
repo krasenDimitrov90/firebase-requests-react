@@ -1,5 +1,5 @@
 import React from "react";
-import { Request } from "../services/requests";
+import * as request from '../services/requests';
 
 
 const useHttp = () => {
@@ -7,21 +7,25 @@ const useHttp = () => {
     const [isLoading, setIsloading] = React.useState(false);
     const [error, setError] = React.useState(null);
 
+    // action, dataHandler, errorHandler, data = {}, token = ''
 
-    const sendRequest = React.useCallback((action, responseHandler, errorHandler) => {
+    const sendRequest = React.useCallback((requestConfig, dataHandler, errorHandler) => {
 
+        const action = requestConfig.action;
+        
         setIsloading(true);
-        return Request[action]()
+        return request[action](requestConfig)
             .then(data => {
                 setIsloading(false);
                 console.log('In the use-Http Hook');
-                responseHandler(data);
+                dataHandler(data);
             })
             .catch(err => {
                 err.then(error => {
+                    const errorMessage = error.error.message || error.error;
                     setIsloading(false);
                     console.log(error);
-                    errorHandler(error);
+                    errorHandler(errorMessage);
                 })
             });
     },[])

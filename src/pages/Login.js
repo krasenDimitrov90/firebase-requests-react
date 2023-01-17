@@ -3,8 +3,7 @@ import AuthContext from "../context/auth-context";
 import useInput from "../hooks/use-input";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
-import * as request from '../services/requests';
-import { HandleError } from "../services/errors";
+import useHttp from "../hooks/use-http";
 
 
 
@@ -14,8 +13,9 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const { isLoading, sendRequest: requestLogin } = useHttp();
+
     const authCtx = React.useContext(AuthContext);
-    const [isLoading, setIsLoading] = React.useState(false);
 
     const {
         value: enteredEmail,
@@ -35,6 +35,14 @@ const Login = () => {
         reset: resetPasswordInput,
     } = useInput(value => value.trim().length >= 6);
 
+    const loginHandler = (userData) => {
+        authCtx.login(userData.idToken, userData.localId, userData.email);
+        navigate('/');
+    };
+
+    const errorHandler = (err) => {
+        alert(err);
+    };
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -42,11 +50,9 @@ const Login = () => {
         if (!enteredEmailIsValid) {
             return;
         }
-
         if (!enteredPasswordIsValid) {
             return;
         }
-
 
         const data = {
             email: enteredEmail,
@@ -54,20 +60,13 @@ const Login = () => {
             returnSecureToken: true,
         };
 
-        setIsLoading(true);
-        request.login(data)
-            .then(user => {
-                console.log('In login');
-                setIsLoading(false)
-                authCtx.login(user.idToken, user.localId, user.email);
-                navigate('/');
-            })
-            .catch(err => {
-                setIsLoading(false)
-                err.then(error => {
-                    HandleError.loginError(error.error);
-                });
-            });
+        const requestConfig = {
+            action: 'login',
+            data: data,
+        };
+
+        requestLogin(requestConfig, loginHandler, errorHandler);
+
         resetEmailInput();
         resetPasswordInput();
     };

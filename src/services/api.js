@@ -1,13 +1,18 @@
 
+// method, url, data, token = null
+const request = (method, url, requestConfig = {}) => {
 
-const request = (method, url, data, token = null) => {
-
+    const {data, id, token } = requestConfig;
     const options = {};
 
     if (method !== 'GET') {
         options.method = method;
         options.headers = {"Content-Type": "application/json"};
         options.body = JSON.stringify(data);
+    }
+
+    if (id) {
+        url = `${url}/${id}.json`;
     }
 
     if (token) {

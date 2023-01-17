@@ -12,7 +12,10 @@ const Books = () => {
     React.useEffect(() => {
         const setBooksHandler = (books) => setBooks(books);
         const errorHandler = (error) => alert(error.error);
-        getBooks('getAllBooks', setBooksHandler, errorHandler);
+
+        const requestConfig = {action: 'getAllBooks'};
+
+        getBooks(requestConfig, setBooksHandler, errorHandler);
     }, [getBooks]);
 
     return (

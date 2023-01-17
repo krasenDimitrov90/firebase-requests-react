@@ -2,13 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router";
 import InputField from "../components/InputField";
 import AuthContext from "../context/auth-context";
+import useHttp from "../hooks/use-http";
 import useInputCopy from "../hooks/use-input copy";
 
-import * as request from '../services/requests';
 
 const AddBook = () => {
 
     const navigate = useNavigate();
+
+    const { isLoading, sendRequest: requestAddBook } = useHttp();
 
     const authCtx = React.useContext(AuthContext);
     const userCredentials = authCtx.getUserCredentials();
@@ -45,28 +47,38 @@ const AddBook = () => {
         resetValue: resetImageInput,
     } = useInputCopy(value => value.trim().length > 0);
 
+    const addBookHandler = (data) => {
+        console.log(data);
+    };
+
+    const errorHandler = (err) => {
+        alert(err);
+        authCtx.loggout();
+        navigate('/login');
+    };
+
     const submitHandler = (e) => {
         e.preventDefault();
 
 
-        let data = {author, title, description, image,
+        let data = {
+            author, title, description, image,
             email: userCredentials.userEmail,
             ownerId: userCredentials.userId,
         }
 
-        request.addBook(data, userCredentials.userToken)
-            .then(data => console.log(data))
-            .catch(err => {
-                err.then(error => {
-                    alert(error.error);
-                    authCtx.loggout();
-                    navigate('/login');
-                });
-            });
+        const requestConfig = {
+            action: 'addBook',
+            data: data,
+            token: userCredentials.userToken
+        };
+
+        requestAddBook(requestConfig, addBookHandler, errorHandler);
     };
 
     return (
         <form onSubmit={submitHandler}>
+            {isLoading && <h1>Loading...</h1>}
             <InputField
                 htmlFor='author'
                 label="Enter author"

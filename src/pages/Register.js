@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 import InputField from "../components/InputField";
 import './Register.css';
 import useInputCopy from "../hooks/use-input copy";
-import * as request from '../services/requests';
-import { HandleError } from "../services/errors";
+import useHttp from "../hooks/use-http";
 
 
 const emailValidator = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -12,6 +11,8 @@ const emailValidator = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 const Register = () => {
 
     const navigate = useNavigate();
+
+    const {sendRequest: requestRegister} = useHttp();
 
     const {
         value: email,
@@ -58,13 +59,13 @@ const Register = () => {
 
         const data = {email, password};
 
-        request.register(data)
-            .then(data => navigate('/login'))
-            .catch(err => {
-                err.then(error => {
-                    HandleError.loginError(error.error);
-                });
-            });
+        const requestConfig = {action: 'register', data: data};
+
+        const registerHandler = () => navigate('/login');
+        const errorHandler = (err) => alert(err); 
+
+        requestRegister(requestConfig, registerHandler, errorHandler);
+
 
         resetEmailInput();
         resetPasswordInput();
