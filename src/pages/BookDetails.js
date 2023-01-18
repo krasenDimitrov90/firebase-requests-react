@@ -1,41 +1,37 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Book from "../components/Book";
+import useHttp from "../hooks/use-http";
 
 const BookDetails = () => {
     const params = useParams();
-    console.log(params);
+
+    const {isLoading, sendRequest: requestBook} = useHttp();
 
     const [book, setBook] = React.useState({});
 
     React.useEffect(() => {
-        // http://localhost:3000/books/-NLpvIliXTSFx7Nlg45X
-        fetch(`https://testing-12da0-default-rtdb.europe-west1.firebasedatabase.app/books/${params.bookId}.json`, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"}
-        })
-            .then(res => {
-                console.log(res);
-                return res.json();
-            })
-            .then(book => {
-                console.log(book);
-                setBook(book)
-            })
-            .catch(err => {
-                err.then(error => {
-                    let errorMessage = error.error || error.error.message;
-                    console.log(errorMessage);
-                })
-            })
+
+        const bookDataHandler = (book) => {
+            setBook(book);
+        };
+
+        const errorHandler = (err) => {
+            alert(err);
+        };
+
+        const requestConfig = {action: 'getBook', id: params.bookId};
+
+        requestBook(requestConfig, bookDataHandler, errorHandler);
 
     }, [])
 
 
     return (
         <>
-            {/* {Object.keys(book).length === 0 && <h1>No details found</h1>} */}
+            {isLoading && <h1>Loading...</h1>}
             {Object.keys(book).length > 0 && <Book
+                ownerId={book.ownerId}
                 author={book.author}
                 title={book.title}
                 description={book.description}

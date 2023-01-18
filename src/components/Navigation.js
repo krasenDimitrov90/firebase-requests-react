@@ -17,7 +17,6 @@ const Navigation = (props) => {
 
     const userTemplate = (
         <>
-            <li><Link to={'/products'} >Products</Link></li>
             <li><Link to={'/add-book'} >Add Book</Link></li>
             <li><Link to={'/'} onClick={loggoutHandler} >Loggout</Link></li>
         </>

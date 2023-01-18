@@ -14,6 +14,6 @@ export const register = (requestConfig) => api.post(registerURL, requestConfig);
 
 export const addBook = (requestConfig) => api.post(`${host}/books.json`, requestConfig);
 
-export const getBook = (requestConfig) => api.get(host, requestConfig);
+export const getBook = (requestConfig) => api.get(`${host}/books`, requestConfig);
 
 export const getAllBooks = () => api.get(`${host}/books.json`);

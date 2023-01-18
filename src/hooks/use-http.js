@@ -7,8 +7,6 @@ const useHttp = () => {
     const [isLoading, setIsloading] = React.useState(false);
     const [error, setError] = React.useState(null);
 
-    // action, dataHandler, errorHandler, data = {}, token = ''
-
     const sendRequest = React.useCallback((requestConfig, dataHandler, errorHandler) => {
 
         const action = requestConfig.action;
