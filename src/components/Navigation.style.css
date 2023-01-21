@@ -1,0 +1,14 @@
+.navigation-list{
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.navigation-list li {
+    list-style: none;
+    color: green;
+    padding: 5px;
+}
+
+.navigation-list li a {
+    text-decoration: none;
+}

@@ -74,32 +74,44 @@ const Login = () => {
 
     return (
         <>
-            <h1>Login Page</h1>
-            <form onSubmit={submitHandler} className="login-form">
-                <label htmlFor="email">Enter email</label>
-                <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={enteredEmail}
-                    onBlur={emailInputOnBlurHandler}
-                    onChange={emailInputChangeHandler}
-                />
-                {emailInputIsInvalid && <p>Invalid Email!</p>}
-                <label htmlFor="password">Enter password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={enteredPassword}
-                    onChange={passwordInputChangeHandler}
-                    onBlur={passwordInputOnBlurHandler}
-                />
-                {passwordInputIsInvalid && <p>Wrong password</p>}
-                {isLoading && <p>Loading...</p>}
-                {!isLoading && <button>Login</button>}
 
-            </form>
+            <section className="login-form-wrapper">
+                <form onSubmit={submitHandler} className="login-form">
+                    <h1 className="login-form-title" >LOG IN</h1>
+                    {/* <label htmlFor="email">Enter email</label> */}
+                    <div className="email-input">
+                        <i class="fa-solid fa-user"></i>
+                        <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            placeholder="Email"
+                            value={enteredEmail}
+                            onBlur={emailInputOnBlurHandler}
+                            onChange={emailInputChangeHandler}
+                        />
+                    </div>
+                    {emailInputIsInvalid && <p className="invalid-email" >Invalid Email!</p>}
+                    {/* <label htmlFor="password">Enter password</label> */}
+                    <div className="password-input">
+                        <i class="fa-solid fa-lock"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            value={enteredPassword}
+                            onChange={passwordInputChangeHandler}
+                            onBlur={passwordInputOnBlurHandler}
+                        />
+                    </div>
+                    {passwordInputIsInvalid && <p className="invalid-email" >Incorect password</p>}
+                    <div className="login-btn-wrapper">
+                        <button className="login-btn">Login</button>
+                    </div>
+
+                </form>
+            </section>
         </>
     );
 };

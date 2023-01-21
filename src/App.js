@@ -9,6 +9,7 @@ import Books from './pages/Books';
 import './App.css';
 import Layout from './components/Layout';
 import BookDetails from './pages/BookDetails';
+import Inventory from './pages/Inventory';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/' exact element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/inventory' element={<Inventory />} />
             <Route path='/add-book' element={<AddBook />} />
             <Route path='/books' element={<Books />} />
             <Route path='/books/:bookId' element={<BookDetails />} />
