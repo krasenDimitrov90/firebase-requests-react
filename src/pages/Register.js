@@ -51,6 +51,10 @@ const Register = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
+        if (!emailIsValid) {
+            console.log('Invalid email');
+            return;
+        }
 
         if (password !== repeatPassword) {
             console.log('Passwords does\'t match!');
